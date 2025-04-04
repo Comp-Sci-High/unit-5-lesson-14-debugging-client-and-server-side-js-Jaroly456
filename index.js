@@ -1,31 +1,34 @@
 // Task 1: Debug Server Set up, Models, and Schema
-
+const express = require("express")
+const mongoose = require("mongoose")
 const app = express();
 
-pp.use(express.json());
+app.use(express.json());
 
 app.use((req, res, next) => {
     console.log(req.method + req.url)
     next()
 })
 
-const menuSchema = new mongoose.schema({
+app.use(express.json())
+app.use(express.static(__dirname + "/public"))
+
+const menuSchema = new mongoose.Schema({
   name: { type: String, require: true },
   cost: { type: Number },
   rating: { type: Number, default: 0 },
-  review: { type: string },
+  review: { type: String },
 });
 
-const Menu = mongoose.Model("Menu", menu, "Menus");
+const Menu = mongoose.model("Menu", menuSchema, "Menus");
 
 // Task 2: Debug GET route
 
-/*
-app.get("/menu", (req, res) => {
-  const allItems = await menu.find({});
+
+app.get("/menu", async (req, res) => {
+  const allItems = await Menu.find({});
   res.json(allItems);
 });
-*/
 
 // Go to script.js for Task 3, verify both work before moving on!
 
